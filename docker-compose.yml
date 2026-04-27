@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./backend
+    container_name: confbot-backend
+    restart: unless-stopped
+    environment:
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-gpt-4o-mini}
+      LLM_TEMPERATURE: ${LLM_TEMPERATURE:-0.2}
+      DATA_DIR: /app/data
+      SQLITE_PATH: /app/data/confbot.db
+      CHECKPOINT_PATH: /app/data/checkpoints.db
+      MCP_CONFIG_PATH: /app/data/mcp.json
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000,http://localhost:8080
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: confbot-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"

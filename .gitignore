@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# App data (sqlite, checkpoints, mcp.json)
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
